@@ -1,35 +1,30 @@
 import pytest
-from dotenv import load_dotenv; load_dotenv()
-
-
-
-from utils import flights, bookings, support
+from utils.support import flights, bookings, support
 
 
 def test_e2e_booking_flow(auth_headers):
 
-    # 1) Create User
+    # 1) Crear user
     user = support.create_user(auth_headers)
 
-    # 2) Create Flight
+    # 2) Crear Flight
     created_flight, status = flights.create_flight(auth_headers)
     assert status in (200, 201)
     flight_id = created_flight["id"]
 
-    # 3) Create Booking
+    # 3) Create booking
     created_booking = bookings.create_booking(auth_headers)
     booking_id = created_booking["id"]
 
-    # 4) Get Booking
+    # 4) Get booking
     booking = bookings.get_booking(booking_id, auth_headers)
 
-    #Validate Booking
     assert booking["id"] == booking_id
     assert booking["user_id"] == user["id"]
     assert booking["flight_id"] == flight_id
     assert len(booking["passengers"]) > 0
 
-    # Postcondition - Cleanup | Delete Booking and Flight
+    #Clean Test
     delete_booking_status = bookings.delete_booking(booking_id, auth_headers)
     assert delete_booking_status in (200, 204)
 

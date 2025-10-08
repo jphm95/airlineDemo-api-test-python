@@ -84,19 +84,3 @@ pytest tests/e2e -v
 * Campos mínimos en responses (`id`, `flight_id`, `user_id`, `passengers`)
 * Limpieza final (DELETE ejecutado con éxito)
 
----
-
-## ✅ Buenas prácticas
-
-* Mantener helpers genéricos (no lógica de negocio en tests)
-* Reutilizar fixtures de autenticación (`auth_headers`)
-* Usar `r.raise_for_status()` en helpers para simplificar los tests
-* No repetir `BASE_URL` en cada request (se concatena en `api_helpers`)
-
----
-
-## 📚 Próximos pasos
-
-* Agregar `update_booking` y `update_user`
-* Integrar con pipeline CI/CD (GitHub Actions)
-* Generar reportes con `pytest-html`

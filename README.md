@@ -8,17 +8,36 @@ Desarrollado en **Python + Pytest**, con enfoque modular y helpers reutilizables
 ## 📦 Estructura del proyecto
 
 ```
-utils/
- ├── api_helpers.py      # Función genérica api_request()
- ├── settings.py         # Rutas base (BASE_URL, ENDPOINTS)
- ├── flights.py          # CRUD de vuelos
- ├── bookings.py         # CRUD de reservas (bookings)
- ├── support.py          # Recursos auxiliares: crear usuarios, aircrafts
- └── fixtures.py         # Fixtures de autenticación y setup global
-tests/
- ├── api/                # Pruebas unitarias o de endpoint
- ├── e2e/                # Escenarios integrados (flujo completo)
- └── conftest.py         # Configuración Pytest
+AirlineDemoApiTest/
+├─ .github/
+│  └─ workflows/
+│     └─ test-suite-airline.yml
+├─ .env
+├─ requirements.txt
+├─ README.md
+├─ utils/
+│  ├─ api_helpers.py          # api_request(), manejo BASE_URL, logging, retries opcional
+│  ├─ settings.py             # BASE_URL y endpoints: FLIGHTS, BOOKINGS, USERS, AIRCRAFTS...
+│  ├─ schemas.py              # esquemas/validaciones (si usas pydantic o jsonschema)
+│  ├─ support/                # data builders / generadores / recursos auxiliares
+│  │  ├─ __init__.py
+│  │  ├─ users.py             # create_user(), helpers de usuario
+│  │  ├─ aircrafts.py         # ensure_aircraft_id(), helpers de aircraft
+│  │  └─ data_builders.py     # generadores random (passport, seat, fechas, etc.)
+│  └─ services/               # “clientes” de dominio para la API
+│     ├─ __init__.py
+│     ├─ flights.py           # create_flight(), get_flight(), update_flight(), delete_flight()
+│     └─ bookings.py          # create_booking(), get_booking(), delete_booking()
+├─ tests/
+│  ├─ conftest.py             # aquí viven las fixtures (auth_headers, etc.)
+│  ├─ api/
+│  │  ├─ test_flights_positive_scenarios.py
+│  │  └─ test_flights_negative_scenarios.py
+│  ├─ e2e/
+│  │  └─ test_e2e_book_flight.py   # snake_case
+│  └─ features/                # (solo si SÍ usarás BDD en este repo)
+│     └─ __init__.py
+└─ .gitignore                  # incluye .env, .venv, __pycache__/, .pytest_cache/
 ```
 
 ---
